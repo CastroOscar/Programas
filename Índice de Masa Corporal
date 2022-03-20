@@ -2,56 +2,75 @@
 Castro Avila Oscar Daniel 
 Calcular el IMC
 ---------------------------*/
-
 #include<stdio.h>
 #include<math.h>
-#define a 17.0
-#define b 18.5
-#define c 25.0
-#define d 30.0
 
+float peso,
+      imc,
+      est;
+      
+float indiceMC(float peso, float est);
+void resultados(int edad);
 void opcion(void);
 
 int main() {
-	
-float peso,est,imc;
-int op;
-
-    printf("\tCALCULO APROXIMADO DEL INDICE DE MASA CORPORAL EN ADULTOS\n");
+    int op = 0,
+        edad = 0;
+        
+      printf("\t----------------------------------------------\n"
+             "\tCALCULO APROXIMADO DEL INDICE DE MASA CORPORAL\n"
+             "\t----------------------------------------------\n");
+         
+   printf ( "\nIngresa tu edad: ");scanf("%i",&edad); 
+   printf("Ingresa tu estatura en metros: ");scanf("%f",&est); 
    do{
-   
-    printf ( "\nIngresa tu peso en kilogramos: ");
-    scanf("%f",&peso);
-
-    printf("Ingresa tu estatura en metros: ");
-    scanf("%f",&est);
-    
-    imc = peso/pow(est,2);
-    
-    printf("\nTu IMC es: %.1f\n",imc);
-    
-    if (imc<=a)
-    printf("Tienes desnutricion\n");
-    else
-      if(imc>a,imc<b)
-    printf("Tiene peso bajo\n");
-    else
-       if(imc>=b,imc<c)
-    printf("Tiene peso normal\n");
-    else
-       if(imc>=c,imc<d)
-    printf("Tiene sobrepeso\n");
-    else
-       if(imc>=d)
-    printf("Tiene obesidad\n");
-    opcion();
-    printf("\nDigita la Opcion: ");scanf("%i",&op);
+     
+     printf("\nIngresa tu peso en kilogramos: ");scanf("%f",&peso);
+   	 
+      imc = indiceMC(peso, est);
+          printf("\nTu IMC es: %.1f\n",imc);
+          resultados(edad);
+          opcion();
+          printf("\nDigita la Opcion: ");scanf("%i",&op);
    }
-    while(op == 1);
-    return  0;
+   while(op != 2);
+
+	return  0;  
 }
 void opcion(void){
 	printf("\n\t   OPCIONES\n"
            "\t| 1. REPETIR |\n"
            "\t| 2. SALIR   |\n");
-}
+}    
+float indiceMC(float peso, float est){   
+    imc = peso/pow(est,2);	
+	return imc;
+} 
+void resultados(int edad){
+  int fil;
+  float tab[2][4]={
+      // 0     1      2    3
+ /*0*/ 14.5, 15.0, 18.0, 19.5,  //menores
+ /*1*/ 17.0, 18.5, 25.0, 30.0}; //adultos 
+    
+if(edad >= 18){
+    fil = 1;  //for(int i=0;i<4;i++) printf("\t %.1f \n", tab[fil][i]);     
+    
+       }else{
+       fil = 0; //for(int i=0;i<4;i++) printf("\t %.1f \n", tab[fil][i]);      
+    }       
+        if (imc<=tab[fil][0])
+    printf("Tienes desnutricion\n");
+
+    else   if(imc>tab[fil][0],imc<tab[fil][1])
+    printf("Tiene peso bajo\n");
+ 
+    else   if(imc>=tab[fil][1],imc<tab[fil][2])
+    printf("Tiene peso normal\n");
+                          
+    else   if(imc>=tab[fil][2],imc<tab[fil][3])
+    printf("Tiene sobrepeso\n");
+   
+    else   if(imc>=tab[fil][3])
+    printf("Tiene obesidad\n");
+    }
