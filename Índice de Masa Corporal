@@ -34,8 +34,7 @@ int main() {
           printf("\nDigita la Opcion: ");scanf("%i",&op);
    }
    while(op != 2);
-
-	return  0;  
+   return  0;  
 }
 void opcion(void){
 	printf("\n\t   OPCIONES\n"
@@ -60,7 +59,7 @@ if(edad >= 18){
        fil = 0; //for(int i=0;i<4;i++) printf("\t %.1f \n", tab[fil][i]);      
     }       
         if (imc<=tab[fil][0])
-    printf("Tienes desnutricion\n");
+    printf("Tiene desnutricion\n");
 
     else   if(imc>tab[fil][0],imc<tab[fil][1])
     printf("Tiene peso bajo\n");
