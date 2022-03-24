@@ -1,0 +1,221 @@
+/*------------------------------------------------------------------------
+C Procedimientos de taquilla.
+2021. Castro Avila Oscar Daniel.
+Funciones: Determina  el valor total  de la venta  del turno y del deposito
+           indicando si hay faltante o sobrante, ademas realiza un desglose 
+	   de total boletos para determinar  la cantidad de cajas, paquetes 
+	   y tiras. De  igual  manera  realiza el  procedimiento contrario.
+-------------------------------------------------------------------------*/
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+//Constantes de cantidad de boletos por caja, paquete y tira.--------------
+#define c 5000
+#define p 1000
+#define t 5
+
+    int bol, caja, paq,
+        tira, suelto, 
+	impt, err, op;
+//Prototipos de funciones.-------------------------------------------------    
+void impTotal();
+void corteDep();
+void desglose();
+void totalB();
+void opcCot();
+void opc();
+//Funcion principal.--------------------------------------------------------
+int main () {     
+    printf("\n\t ----------------------------- \n"
+	     "\t|  PROCEDIMIENTOS DE TAQUILLA |\n"
+	     "\t|-----------------------------|\n"
+             "\t| 1 - Importe Total del turno.|\n"
+             "\t| 2 - Corte/Deposito.         |\n"
+             "\t| 3 - Cotejo de boletos.      |\n"
+             "\t| 4 - Salir.                  |\n"
+             "\t ----------------------------- \n");
+	while (1) {	         
+        printf("\nDigita la opcion: "); scanf("%d",&op);
+        switch (op) {   
+        
+            case 1: impTotal();    
+                while (1) {
+                    opc();   
+                    printf("\nDigita la opcion: "); scanf("%d",&op);
+                if (op == 1)
+                    impTotal();
+                else
+                return main ();
+                }
+	            break;
+	
+            case 2: corteDep();    
+                while (1) {
+                    opc();   
+                    printf("\nDigita la opcion: "); scanf("%d",&op);
+                if (op == 1)
+                    corteDep();
+                else
+                return main ();
+                }
+	            break;	
+	
+            case 3: opcCot();
+                while (1) {
+                    printf("\nDigita la opcion: "); scanf("%d",&op);
+                if (op == 1) {
+                    desglose();
+                while (1) {
+                    opc();   
+                    printf("\nDigita la opcion: "); scanf("%d",&op);
+                    if (op == 1) {
+                        desglose();
+                    }
+                    else {            
+                    return main();
+                    }
+                  }
+                }   
+                else {
+                    totalB();
+                    while (1) {
+                        opc();   
+                        printf("\nDigita la opcion: "); scanf("%d",&op);
+                    if (op == 1) {
+                        totalB();
+                    }
+                    else {
+                    return main();	
+                    }
+                   }
+                  }
+                }
+                break;
+                
+	        case 4: exit (0);        
+            default: printf("\nFuncion invalida\n");	       
+        }
+    } 
+    return 0;
+}
+//Opciones.------------------------------------------------------------------
+void opc(void) {
+    printf("\n\t --------------- \n"
+             "\t| 1 - Repetir.  |\n"
+             "\t| 2 - Regresar. |\n"
+             "\t --------------- \n");   
+}
+//Seleccion de funciones inversas.--------------------------------------------
+void opcCot(void) {
+    printf("\n\t----------------------\n"
+             "\t   COTEJO DE BOLETOS  \n"
+             "\t----------------------\n"
+             "\t 1 - Desglose.        \n"
+             "\t 2 - Total de boletos \n"
+             "\t----------------------\n");
+}
+//Importe de venta del turno.------------------------------------------------
+void impTotal(void) {
+   int recB, dotB, traB, venB,
+       rcrg, recT, dotT, traT,
+       venT, numDep[10];
+        
+        printf("\n\t--IMPORTE TOTAL DEL TURNO--\n");
+        printf("\n\tBOLETOS\n");
+        printf("Recibido: "); scanf("%d",&recB);        
+        printf("Dotacion: "); scanf("%d",&dotB);        
+        printf("Traspaso: "); scanf("%d",&traB);        
+        venB=recB+dotB-traB;
+        
+        printf("Venta: %d\n",venB);
+        printf("\n\tTARJETAS\n");
+        printf("Recarga: $"); scanf("%d",&rcrg);        
+        printf("Recibido: "); scanf("%d",&recT);        
+        printf("Dotacion: "); scanf("%d",&dotT);        
+        printf("Traspaso: ");scanf("%d",&traT);       
+        venT=recT+dotT-traT;
+        printf("Venta: %d\n",venT);
+
+        impt=venB*t+rcrg+venT*15;
+        printf("\n\tIMPORTE TOTAL: $%d\n",impt);
+        
+        int suma, n;
+        printf("\nIngresa el numero de depositos: "); scanf("%d",&n);        
+        printf("\n");
+        
+        for(int i=1; i<=n; i++) {           
+            printf("Deposito %d:$",i); scanf("%d",&numDep[i]);                       
+        }for(int i=1; i<=n; i++)
+                suma+= numDep[i];
+            printf("\n\tTOTAL IMPORTE DE DEPOSITOS : $%d",suma);
+        
+        err=suma-impt;
+        if(impt==suma)
+            printf("\nEsta correcto\n");
+        else if(suma>impt)
+            printf("\n¡Tienes un sobrante! de: $%d\n",err);
+        else if(suma<impt)
+            printf("\n¡Tienes un faltante! de: $%d\n",err);
+}
+//Importe del corte o deposito.----------------------------------------------
+void corteDep() {
+    int dep,q,d,cn,
+        cta,v,dz,cco,un;
+    
+       printf("\n\t--CORTE/DEPOSITO--\n");         
+       printf("\nTotal del Deposito: $"); scanf("%d",&dep);       
+       printf("\nIngresa los montos de la venta\n");
+
+       printf("\n\tBILLETES\n");
+       printf("$500: "); scanf("%d",&q);             
+       printf("$200: "); scanf("%d",&d);       
+       printf("$100: "); scanf("%d",&cn);      
+       printf("$50: "); scanf("%d",&cta);       
+       printf("$20: "); scanf("%d",&v);
+      
+       printf("\tMONEDAS");
+       printf("\n$10: "); scanf("%d",&dz);      
+       printf("$5: "); scanf("%d",&cco);      
+       printf("$1: "); scanf("%d",&un);             
+       impt=q*500+d*200+cn*100+cta*50+v*20+dz*10+cco*t+un;
+       
+       printf("\nImporte total de venta: $%d",impt);
+       err=impt-dep;
+       if(dep==impt)
+           printf("\nEsta correcto");
+       else if(dep<impt)
+           printf("\n¡Tienes un sobrante! de: $%d\n",err);
+       else if(dep>impt)
+           printf("\n¡Tienes un faltante! de: $%d\n",err); 
+}
+//Desglosar cantidad de boletos.-------------------------------------------------
+void desglose(void){
+    
+   printf("\n\t--DESGLOSE--\n");
+   printf("\nIngresa la cantidad de boletos: "); scanf("%d",&bol);     
+            
+            caja = bol/c;
+            printf("\nCajas: %d",caja);
+            
+            paq = (bol % c)/p;
+            printf("\nPaquetes: %d",paq);
+            
+            tira = (bol % p)/t;
+            printf("\nNo. de Tira: %d",tira);
+            
+            suelto = bol % t;
+            printf("\nBoletos sueltos: %d\n",suelto); 
+}
+//Cantidad total de boletos.-----------------------------------------------------
+void totalB(void) {    
+            printf("\n\t--TOTAL DE BOLETOS--\n");
+            printf("\nIngresa las cantidades\n");
+            
+            printf("\nCajas: "); scanf("%d",&caja);           
+            printf("Paquetes: "); scanf("%d",&paq);            
+            printf("No. de tira: "); scanf("%d",&tira);            
+            printf("Boletos sueltos: "); scanf("%d",&suelto);            
+            
+            bol=caja*c+paq*p+tira*t+suelto;
+            printf("Total de boletos: %d\n",bol);
+}
